@@ -32,9 +32,7 @@ time_serial = time.perf_counter() - start_serial
 
 print(f"[Serial - 1 Core] Waktu Eksekusi: {time_serial:.4f} detik")
 
-# ==============================================================================
-# 3. RUN SIMULASI PARALEL (MULTI-CORE / SHARED MEMORY)
-# ==============================================================================
+
 num_workers = min(4, cpu_count())
 chunks = np.array_split(base_grid, num_workers, axis=0)
 
@@ -47,12 +45,9 @@ time_parallel = time.perf_counter() - start_parallel
 
 print(f"[Paralel - {num_workers} Cores] Waktu Eksekusi: {time_parallel:.4f} detik")
 
-# ==============================================================================
-# 4. METRIK KINERJA HPC (SPEEDUP, SCALABILITY, THROUGHPUT)
-# ==============================================================================
 speedup = time_serial / time_parallel
 efficiency = (speedup / num_workers) * 100
-total_floating_ops = (GRID_SIZE * GRID_SIZE * STEPS * 6)  # Estimasi FLOP
+total_floating_ops = (GRID_SIZE * GRID_SIZE * STEPS * 6)  
 mflops = (total_floating_ops / (time_parallel * 1e6))
 
 print("\n=== EVALUASI PARAMETER KINERJA HPC ===")
